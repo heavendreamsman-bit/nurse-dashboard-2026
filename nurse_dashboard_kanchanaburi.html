@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แดชบอร์ดอัตรากำลังพยาบาล — จังหวัดกาญจนบุรี</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Sarabun','Noto Sans Thai',sans-serif;background:#f5f0fa;color:#333;font-size:14px;line-height:1.6}
+  .wrap{max-width:1100px;margin:0 auto;padding:24px 20px}
+  .page-title{font-size:20px;font-weight:600;color:#3d2f5a;margin-bottom:3px}
+  .page-sub{font-size:12px;color:#9b8ea0;margin-bottom:22px}
+  .sec{margin-bottom:26px}
+  .sec-head{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#9b8ea0;border-left:3px solid #c9b8d4;padding-left:9px;margin-bottom:12px}
+  .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .kpi{border-radius:14px;padding:15px 17px}
+  .kpi .lbl{font-size:11px;color:#6b5a7e;margin-bottom:6px;line-height:1.4}
+  .kpi .val{font-size:22px;font-weight:600;color:#3d2f5a;line-height:1.1}
+  .kpi .sub{font-size:11px;margin-top:5px}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .card{border-radius:14px;padding:16px 18px}
+  .card h3{font-size:12px;font-weight:600;color:#4a3a62;margin-bottom:13px}
+  .full-card{border-radius:14px;padding:16px 18px}
+  .full-card h3{font-size:12px;font-weight:600;color:#4a3a62;margin-bottom:13px}
+  table.t1{width:100%;font-size:11px;border-collapse:collapse}
+  table.t1 th{padding:6px 8px;text-align:left;color:#7a6a8a;font-weight:600;border-bottom:1px solid rgba(180,160,190,0.25);white-space:nowrap}
+  table.t1 td{padding:7px 8px;border-bottom:1px solid rgba(180,160,190,0.14);color:#333;vertical-align:middle}
+  table.t1 tr:last-child td{border-bottom:none}
+  .chip{display:inline-block;font-size:10px;padding:2px 9px;border-radius:20px;font-weight:600}
+  .chip-up{background:#d4edda;color:#2d6a4f}
+  .chip-dn{background:#fde8e8;color:#7b2020}
+  .chip-eq{background:#ece8f4;color:#5a3d8a}
+  .bar-row{display:flex;align-items:center;gap:6px;width:100%}
+  .bar-bg{flex:1;height:6px;border-radius:4px;background:rgba(180,160,190,0.2)}
+  .bar-fill{height:6px;border-radius:4px}
+  .alloc-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .alloc-name{font-size:11px;color:#333;min-width:100px;flex-shrink:0}
+  .alloc-bar-bg{flex:1;height:9px;border-radius:5px;background:rgba(180,160,190,0.2)}
+  .alloc-bar-f{height:9px;border-radius:5px;background:#b5a0d0}
+  .alloc-num{font-size:11px;color:#7a6a8a;min-width:24px;text-align:right}
+  .divider{border:none;border-top:1px solid rgba(180,160,190,0.3);margin:8px 0}
+  @media(max-width:700px){
+    .kpi-row{grid-template-columns:1fr 1fr}
+    .two-col{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="page-title">แดชบอร์ดอัตรากำลังพยาบาล — จังหวัดกาญจนบุรี</div>
+  <div class="page-sub">ข้อมูล ณ เดือนเมษายน 2569 · 15 หน่วยบริการ</div>
+
+  <!-- ส่วนที่ 1: ภาพรวมอัตรากำลัง -->
+  <div class="sec">
+    <div class="sec-head">ส่วนที่ 1 — ภาพรวมอัตรากำลัง</div>
+    <div class="kpi-row">
+      <div class="kpi" style="background:#ede9f5">
+        <div class="lbl">พยาบาลทั้งจังหวัด (เมย 69)</div>
+        <div class="val">729 คน</div>
+        <div class="sub" style="color:#7b5ea7">เพิ่มขึ้น +26 คน จากปีก่อน</div>
+      </div>
+      <div class="kpi" style="background:#e8f4f0">
+        <div class="lbl">พยาบาลปีก่อน (เมย 68)</div>
+        <div class="val">703 คน</div>
+        <div class="sub" style="color:#3b8070">ข้อมูลฐานเปรียบเทียบ</div>
+      </div>
+      <div class="kpi" style="background:#fef3e8">
+        <div class="lbl">ย้ายออกนอกจังหวัด</div>
+        <div class="val">4 คน</div>
+        <div class="sub" style="color:#a0672a">ถ่ายโอน / ย้ายออก รอบนี้</div>
+      </div>
+      <div class="kpi" style="background:#fde8f0">
+        <div class="lbl">ย้ายเข้าจากจังหวัดอื่น</div>
+        <div class="val">1 คน</div>
+        <div class="sub" style="color:#8f2a50">รับโอนเข้าจังหวัด</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ส่วนที่ 2 (เดิม 4): การลาออก -->
+  <div class="sec">
+    <div class="sec-head">ส่วนที่ 2 — การลาออกของพยาบาล (วิเคราะห์ 4 ปี ตค 64–67)</div>
+    <div class="kpi-row" style="margin-bottom:14px">
+      <div class="kpi" style="background:#fde8e8">
+        <div class="lbl">ลาออกสะสม 4 ปี</div>
+        <div class="val">57 คน</div>
+        <div class="sub" style="color:#7b2020">รวมทุกโรงพยาบาล</div>
+      </div>
+      <div class="kpi" style="background:#fef3e8">
+        <div class="lbl">เฉลี่ยต่อปี</div>
+        <div class="val">14.3 คน</div>
+        <div class="sub" style="color:#a0672a">ต่อปีการศึกษา</div>
+      </div>
+      <div class="kpi" style="background:#fde8f0">
+        <div class="lbl">สูงสุดปีเดียว</div>
+        <div class="val">24 คน</div>
+        <div class="sub" style="color:#8f2a50">ตค 67–68 (สูงที่สุด)</div>
+      </div>
+      <div class="kpi" style="background:#ede9f5">
+        <div class="lbl">รพ. ที่ลาออกสูงสุด</div>
+        <div class="val" style="font-size:14px">สมเด็จฯ ๑๙</div>
+        <div class="sub" style="color:#5a3d8a">22 คน ใน 4 ปี</div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="card" style="background:#fff5f5">
+        <h3>การลาออกรายปี แยกรายโรงพยาบาล (stacked)</h3>
+        <div style="position:relative;height:240px"><canvas id="turnChart"></canvas></div>
+      </div>
+      <div class="card" style="background:#fef9f0">
+        <h3>แนวโน้มการลาออกรวมจังหวัด 4 ปี</h3>
+        <div style="position:relative;height:240px"><canvas id="trendTurn"></canvas></div>
+      </div>
+    </div>
+    <div class="full-card" style="background:#f8f4fc;margin-top:14px">
+      <h3>รายละเอียดการลาออกรายโรงพยาบาล แยกตามปี</h3>
+      <table class="t1" id="turn-table"></table>
+    </div>
+  </div>
+
+  <!-- ส่วนที่ 3 (เดิม 3): การจัดสรรปีนี้ -->
+  <div class="sec">
+    <div class="sec-head">ส่วนที่ 3 — สรุปการจัดสรรพยาบาลจบใหม่ ปี 2569</div>
+    <div class="two-col">
+      <div class="card" style="background:#ede9f5">
+        <h3>สรุปการจัดสรรพยาบาลจบใหม่</h3>
+        <table class="t1">
+          <tr>
+            <td style="color:#6b5a7e">ยอดจัดสรรทั้งหมด</td>
+            <td style="text-align:right;font-weight:600">40 คน</td>
+          </tr>
+          <tr>
+            <td style="color:#6b5a7e">แผนลาออก (หักออก)</td>
+            <td style="text-align:right;color:#8f2a50;font-weight:600">−2 คน</td>
+          </tr>
+          <tr>
+            <td style="color:#6b5a7e">สุทธิย้ายเข้า−ออก (สสจ.)</td>
+            <td style="text-align:right;color:#2d6a4f;font-weight:600">+1 คน</td>
+          </tr>
+          <hr class="divider">
+          <tr>
+            <td style="font-weight:600;padding-top:10px">จัดสรรจริง (สุทธิ)</td>
+            <td style="text-align:right;font-weight:600;font-size:16px;color:#5a3d8a;padding-top:10px">37 คน</td>
+          </tr>
+        </table>
+        <div style="margin-top:14px;border-top:1px solid rgba(180,160,190,0.25);padding-top:12px">
+          <div style="font-size:11px;font-weight:600;color:#4a3a62;margin-bottom:10px">จัดสรรจบใหม่ รายโรงพยาบาล</div>
+          <div id="alloc-bars"></div>
+        </div>
+      </div>
+      <div class="card" style="background:#f0f7f4">
+        <h3>รายละเอียดการจัดสรรและการย้าย รายโรงพยาบาล</h3>
+        <div style="overflow-x:auto">
+          <table class="t1" id="alloc-table"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ส่วนที่ 4 (เดิม 2): เมย 68 vs เมย 69 -->
+  <div class="sec">
+    <div class="sec-head">ส่วนที่ 4 — อัตรากำลังรายโรงพยาบาล เมย 68 เทียบ เมย 69</div>
+    <div class="full-card" style="background:#f7f3fb">
+      <h3>จำนวนพยาบาลแต่ละโรงพยาบาล — เปรียบเทียบปีก่อนและปีปัจจุบัน</h3>
+      <div id="compare-rows"></div>
+    </div>
+  </div>
+
+  <div style="font-size:10px;color:#b0a0b8;margin-top:6px;text-align:right">
+    * ลาออก = รวม ตค 64–65, 65–66, 66–67, 67–68 · สสจ./สสอ. ไม่มีกรอบ รพ.
+  </div>
+</div>
+
+<script>
+// alloc=จัดสรรจบใหม่, tr_out=ย้ายออกนอกจังหวัด, tr_in=ย้ายเข้าจากจังหวัดอื่น
+// apv_out=อนุมัติย้ายออก(ภายในจังหวัด), apv_in=อนุมัติย้ายเข้า(ภายในจังหวัด)
+const hospitals = [
+  {name:'สสจ.กาญจนบุรี', p68:19,  c69:20,  t64:0,t65:0,t66:1,t67:0,  alloc:0, tr_out:0, tr_in:0, apv_out:1, apv_in:2},
+  {name:'ทองผาภูมิ',      p68:94,  c69:101, t64:0,t65:1,t66:4,t67:2,  alloc:7, tr_out:2, tr_in:0, apv_out:0, apv_in:2},
+  {name:'สมเด็จฯ ๑๙',    p68:148, c69:147, t64:4,t65:3,t66:5,t67:10, alloc:8, tr_out:0, tr_in:1, apv_out:1, apv_in:1},
+  {name:'บ่อพลอย',        p68:66,  c69:65,  t64:0,t65:2,t66:0,t67:2,  alloc:1, tr_out:0, tr_in:0, apv_out:0, apv_in:1},
+  {name:'ไพบูลย์พนมทวน',  p68:59,  c69:61,  t64:0,t65:1,t66:0,t67:0,  alloc:0, tr_out:0, tr_in:0, apv_out:0, apv_in:1},
+  {name:'ด่านมะขามเตี้ย', p68:44,  c69:44,  t64:1,t65:0,t66:0,t67:0,  alloc:0, tr_out:0, tr_in:0, apv_out:0, apv_in:1},
+  {name:'ท่ากระดาน',      p68:27,  c69:27,  t64:0,t65:0,t66:2,t67:0,  alloc:1, tr_out:0, tr_in:0, apv_out:0, apv_in:0},
+  {name:'ไทรโยค',         p68:44,  c69:49,  t64:3,t65:0,t66:1,t67:3,  alloc:7, tr_out:2, tr_in:0, apv_out:3, apv_in:1},
+  {name:'เลาขวัญ',        p68:40,  c69:46,  t64:0,t65:0,t66:1,t67:1,  alloc:2, tr_out:0, tr_in:0, apv_out:0, apv_in:0},
+  {name:'สถานพระบารมี',   p68:26,  c69:27,  t64:1,t65:0,t66:0,t67:0,  alloc:1, tr_out:0, tr_in:0, apv_out:0, apv_in:0},
+  {name:'สมเด็จฯ ปิย.',   p68:29,  c69:29,  t64:0,t65:0,t66:0,t67:1,  alloc:2, tr_out:0, tr_in:0, apv_out:1, apv_in:0},
+  {name:'สังขละบุรี',     p68:43,  c69:46,  t64:0,t65:0,t66:1,t67:0,  alloc:2, tr_out:0, tr_in:0, apv_out:1, apv_in:1},
+  {name:'ห้วยกระเจาฯ',    p68:33,  c69:35,  t64:0,t65:0,t66:1,t67:3,  alloc:5, tr_out:0, tr_in:0, apv_out:1, apv_in:0},
+  {name:'ศุกร์ศิริฯ',     p68:20,  c69:20,  t64:0,t65:1,t66:0,t67:1,  alloc:3, tr_out:0, tr_in:0, apv_out:2, apv_in:0},
+  {name:'หนองปรือ',       p68:30,  c69:32,  t64:0,t65:1,t66:0,t67:1,  alloc:1, tr_out:0, tr_in:0, apv_out:2, apv_in:2},
+];
+
+// Compare rows เมย 68 vs 69
+const maxNurse = Math.max(...hospitals.map(h => Math.max(h.p68, h.c69)));
+const cr = document.getElementById('compare-rows');
+hospitals.forEach(h => {
+  const diff = h.c69 - h.p68;
+  const chipCls = diff > 0 ? 'chip-up' : diff < 0 ? 'chip-dn' : 'chip-eq';
+  const chipTxt = diff > 0 ? '+' + diff : diff === 0 ? 'คงเดิม' : String(diff);
+  const pct68 = Math.round(h.p68 / maxNurse * 100);
+  const pct69 = Math.round(h.c69 / maxNurse * 100);
+  cr.insertAdjacentHTML('beforeend', `
+    <div style="display:grid;grid-template-columns:120px 1fr 1fr 60px;gap:8px;align-items:center;margin-bottom:9px">
+      <div style="font-size:11px;color:#3d2f5a;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${h.name}">${h.name}</div>
+      <div>
+        <div style="display:flex;align-items:center;gap:5px">
+          <div style="font-size:10px;color:#9b8ea0;min-width:46px">เมย 68</div>
+          <div class="bar-bg"><div class="bar-fill" style="width:${pct68}%;background:#b5a0d0"></div></div>
+          <div style="font-size:10px;color:#7a6a8a;min-width:24px;text-align:right">${h.p68}</div>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;gap:5px">
+          <div style="font-size:10px;color:#6fad96;min-width:46px">เมย 69</div>
+          <div class="bar-bg"><div class="bar-fill" style="width:${pct69}%;background:#7abfaa"></div></div>
+          <div style="font-size:10px;color:#7a6a8a;min-width:24px;text-align:right">${h.c69}</div>
+        </div>
+      </div>
+      <div style="text-align:right"><span class="chip ${chipCls}">${chipTxt}</span></div>
+    </div>`);
+});
+
+// Alloc bars — จัดสรรจบใหม่เท่านั้น
+const allocList = hospitals.filter(h => h.alloc > 0);
+const maxAlloc = Math.max(...allocList.map(h => h.alloc));
+const ab = document.getElementById('alloc-bars');
+allocList.forEach(h => {
+  const w = Math.round(h.alloc / maxAlloc * 100);
+  ab.insertAdjacentHTML('beforeend', `
+    <div class="alloc-row">
+      <div class="alloc-name">${h.name}</div>
+      <div class="alloc-bar-bg"><div class="alloc-bar-f" style="width:${w}%"></div></div>
+      <div class="alloc-num">${h.alloc} คน</div>
+    </div>`);
+});
+
+// Alloc detail table — รวมอนุมัติย้ายออก/เข้าภายในจังหวัด + ย้ายออก/เข้านอกจังหวัด
+const at = document.getElementById('alloc-table');
+at.innerHTML = `<thead><tr>
+  <th style="width:20%">โรงพยาบาล</th>
+  <th style="text-align:center;white-space:nowrap">จัดสรร<br>จบใหม่</th>
+  <th style="text-align:center;white-space:nowrap">อนุมัติย้ายออก<br>(ภายในจังหวัด)</th>
+  <th style="text-align:center;white-space:nowrap">อนุมัติย้ายเข้า<br>(ภายในจังหวัด)</th>
+  <th style="text-align:center;white-space:nowrap">ย้ายออก<br>(นอกจังหวัด)</th>
+  <th style="text-align:center;white-space:nowrap">ย้ายเข้า<br>(นอกจังหวัด)</th>
+  <th style="text-align:center;color:#5a3d8a;white-space:nowrap">สุทธิรวม</th>
+</tr></thead>`;
+const atbody = document.createElement('tbody');
+let sA=0, sApvO=0, sApvI=0, sTrO=0, sTrI=0;
+hospitals.forEach(h => {
+  const net = h.alloc + h.apv_in - h.apv_out + h.tr_in - h.tr_out;
+  const netColor = net > 0 ? '#2d6a4f' : net < 0 ? '#7b2020' : '#555';
+  const netTxt = net > 0 ? '+'+net : String(net);
+  sA+=h.alloc; sApvO+=h.apv_out; sApvI+=h.apv_in; sTrO+=h.tr_out; sTrI+=h.tr_in;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td style="font-weight:600">${h.name}</td>
+    <td style="text-align:center">${h.alloc||'—'}</td>
+    <td style="text-align:center;color:${h.apv_out?'#c0405a':'#bbb'}">${h.apv_out||'—'}</td>
+    <td style="text-align:center;color:${h.apv_in?'#2d6a4f':'#bbb'}">${h.apv_in||'—'}</td>
+    <td style="text-align:center;color:${h.tr_out?'#c0405a':'#bbb'}">${h.tr_out||'—'}</td>
+    <td style="text-align:center;color:${h.tr_in?'#2d6a4f':'#bbb'}">${h.tr_in||'—'}</td>
+    <td style="text-align:center;font-weight:600;color:${netColor}">${net!==0?netTxt:'0'}</td>`;
+  atbody.appendChild(tr);
+});
+const sumNet = sA + sApvI - sApvO + sTrI - sTrO;
+const sfr = document.createElement('tr');
+sfr.style.cssText = 'border-top:2px solid rgba(180,160,190,0.3)';
+sfr.innerHTML = `
+  <td style="font-weight:600;padding-top:9px">รวมทั้งจังหวัด</td>
+  <td style="text-align:center;font-weight:600;padding-top:9px">${sA}</td>
+  <td style="text-align:center;font-weight:600;color:#c0405a;padding-top:9px">${sApvO}</td>
+  <td style="text-align:center;font-weight:600;color:#2d6a4f;padding-top:9px">${sApvI}</td>
+  <td style="text-align:center;font-weight:600;color:#c0405a;padding-top:9px">${sTrO}</td>
+  <td style="text-align:center;font-weight:600;color:#2d6a4f;padding-top:9px">${sTrI}</td>
+  <td style="text-align:center;font-weight:700;font-size:14px;color:#5a3d8a;padding-top:9px">+${sumNet}</td>`;
+atbody.appendChild(sfr);
+at.appendChild(atbody);
+
+// Chart defaults
+Chart.defaults.font.family = "'Sarabun','Noto Sans Thai',sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#888780';
+
+// Turnover stacked bar
+const turnHosp = hospitals.filter(h => h.t64 + h.t65 + h.t66 + h.t67 > 0);
+const shortN = turnHosp.map(h => h.name.length > 8 ? h.name.slice(0, 8) + '…' : h.name);
+
+new Chart(document.getElementById('turnChart'), {
+  type: 'bar',
+  data: {
+    labels: shortN,
+    datasets: [
+      {label:'ตค 64–65', data:turnHosp.map(h=>h.t64), backgroundColor:'#f2c4ce', borderWidth:0},
+      {label:'ตค 65–66', data:turnHosp.map(h=>h.t65), backgroundColor:'#f0a8b8', borderWidth:0},
+      {label:'ตค 66–67', data:turnHosp.map(h=>h.t66), backgroundColor:'#e887a0', borderWidth:0},
+      {label:'ตค 67–68', data:turnHosp.map(h=>h.t67), backgroundColor:'#d45f80', borderWidth:0},
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {legend:{position:'top',labels:{boxWidth:10,padding:10,font:{size:11}}}},
+    scales: {
+      x:{stacked:true, ticks:{maxRotation:45,font:{size:10}}, grid:{color:'rgba(200,180,210,0.12)'}},
+      y:{stacked:true, beginAtZero:true, grid:{color:'rgba(200,180,210,0.15)'}}
+    }
+  }
+});
+
+// Trend line
+const years = ['ตค 64–65','ตค 65–66','ตค 66–67','ตค 67–68'];
+const totByYear = [
+  hospitals.reduce((s,h)=>s+h.t64,0),
+  hospitals.reduce((s,h)=>s+h.t65,0),
+  hospitals.reduce((s,h)=>s+h.t66,0),
+  hospitals.reduce((s,h)=>s+h.t67,0),
+];
+new Chart(document.getElementById('trendTurn'), {
+  type: 'line',
+  data: {
+    labels: years,
+    datasets: [{
+      label: 'ลาออกรวม (คน)',
+      data: totByYear,
+      borderColor: '#d45f80',
+      backgroundColor: 'rgba(212,95,128,0.1)',
+      borderWidth: 2.5,
+      pointBackgroundColor: '#d45f80',
+      pointRadius: 6,
+      tension: 0.35,
+      fill: true
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {legend:{display:false}},
+    scales: {
+      x:{grid:{color:'rgba(200,180,210,0.15)'}},
+      y:{beginAtZero:true, grid:{color:'rgba(200,180,210,0.15)'}}
+    }
+  }
+});
+
+// Turnover detail table
+const tt = document.getElementById('turn-table');
+const totTurn = hospitals.reduce((s,h)=>s+h.t64+h.t65+h.t66+h.t67, 0);
+const maxTurn = Math.max(...hospitals.map(h=>h.t64+h.t65+h.t66+h.t67));
+tt.innerHTML = `<thead><tr>
+  <th style="width:22%">โรงพยาบาล</th>
+  <th style="text-align:center">ตค 64–65</th>
+  <th style="text-align:center">ตค 65–66</th>
+  <th style="text-align:center">ตค 66–67</th>
+  <th style="text-align:center">ตค 67–68</th>
+  <th style="text-align:center;color:#c0405a">รวม</th>
+  <th style="width:28%">สัดส่วน</th>
+</tr></thead>`;
+const tbody = document.createElement('tbody');
+hospitals.forEach(h => {
+  const tot = h.t64+h.t65+h.t66+h.t67;
+  const bw = tot ? Math.round(tot/maxTurn*100) : 0;
+  const pct = tot ? Math.round(tot/totTurn*100) : 0;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td style="font-weight:600">${h.name}</td>
+    <td style="text-align:center">${h.t64||'—'}</td>
+    <td style="text-align:center">${h.t65||'—'}</td>
+    <td style="text-align:center">${h.t66||'—'}</td>
+    <td style="text-align:center">${h.t67||'—'}</td>
+    <td style="text-align:center;font-weight:600;color:${tot>5?'#c0405a':'#333'}">${tot||'—'}</td>
+    <td>
+      <div class="bar-row">
+        <div class="bar-bg"><div class="bar-fill" style="width:${bw}%;background:#e887a0"></div></div>
+        <span style="font-size:10px;color:#9b8ea0;min-width:28px">${pct?pct+'%':''}</span>
+      </div>
+    </td>`;
+  tbody.appendChild(tr);
+});
+const tfr = document.createElement('tr');
+tfr.style.cssText = 'border-top:2px solid rgba(180,160,190,0.3)';
+tfr.innerHTML = `
+  <td style="font-weight:600;padding-top:9px">รวมทั้งจังหวัด</td>
+  <td style="text-align:center;font-weight:600;padding-top:9px">${totByYear[0]}</td>
+  <td style="text-align:center;font-weight:600;padding-top:9px">${totByYear[1]}</td>
+  <td style="text-align:center;font-weight:600;padding-top:9px">${totByYear[2]}</td>
+  <td style="text-align:center;font-weight:600;padding-top:9px">${totByYear[3]}</td>
+  <td style="text-align:center;font-weight:700;font-size:14px;color:#c0405a;padding-top:9px">${totTurn}</td>
+  <td style="padding-top:9px"><span style="font-size:11px;color:#9b8ea0">100%</span></td>`;
+tbody.appendChild(tfr);
+tt.appendChild(tbody);
+</script>
+</body>
+</html>
